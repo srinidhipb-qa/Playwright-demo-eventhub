@@ -19,7 +19,7 @@ test("Should be able to book an event", async ({ page }) => {
   //Verify if page is loaded and first book now button is visible
   const bookButtonLocators = page.getByTestId("book-now-btn");
   const firstBookButtonLocator = bookButtonLocators.first();
-  console.log(firstBookButtonLocator);
+
   await expect(firstBookButtonLocator).toBeVisible();
 
   //Book an event with 1 seat
@@ -44,7 +44,7 @@ test("Should be able to book an event", async ({ page }) => {
   const referenceIdofBookedCard = await firstBookedCard
     .locator(".booking-ref")
     .textContent();
-  console.log(referenceIdofBookedCard);
+
 
   //To test if the booking ref ID and cardd after booking has the same ref ID
   await expect(referenceId === referenceIdofBookedCard).toBeTruthy();
