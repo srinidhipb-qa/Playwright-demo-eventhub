@@ -64,23 +64,18 @@ test("Should be able to book an event", async ({ page }) => {
   await expect(referenceId === referenceIdInViewDetails).toBeTruthy();
 
   //Fetch and compare the customer name
-  const customerNameViewDetails = await page
-    .locator("div span.text-sm")
-    .nth(12)
-    .innerText();
+  const customerNameViewDetails = await page.getByText(bookingName, { exact: true }).innerText();
+
   await expect(customerNameViewDetails === bookingName).toBeTruthy();
   //Fetch and compare the customer email
-  const customerEmailViewDetails = await page
-    .locator("div span.text-sm")
-    .nth(14)
-    .innerText();
+  const customerEmailViewDetails = await page.getByText(bookingEmail, { exact: true }).innerText();
   await expect(customerEmailViewDetails === bookingEmail).toBeTruthy();
   //assert if only one seat is booked
   const bookedSeats = await page
     .locator("div span.text-sm")
     .nth(18)
     .innerText();
-  // console.log(bookedSeats);
+
 
   await expect(bookedSeats === "1").toBeTruthy();
 });
