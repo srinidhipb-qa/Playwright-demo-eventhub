@@ -45,7 +45,6 @@ test("Should be able to book an event", async ({ page }) => {
     .locator(".booking-ref")
     .textContent();
 
-
   //To test if the booking ref ID and cardd after booking has the same ref ID
   await expect(referenceId === referenceIdofBookedCard).toBeTruthy();
 
@@ -64,17 +63,23 @@ test("Should be able to book an event", async ({ page }) => {
   await expect(referenceId === referenceIdInViewDetails).toBeTruthy();
 
   //Fetch and compare the customer name
-  const customerNameViewDetails = await page.getByText(bookingName, { exact: true }).innerText();
-
-  await expect(customerNameViewDetails === bookingName).toBeTruthy();
-  //Fetch and compare the customer email
-  const customerEmailViewDetails = await page.getByText(bookingEmail, { exact: true }).innerText();
-  await expect(customerEmailViewDetails === bookingEmail).toBeTruthy();
-  //assert if only one seat is booked
-  const bookedSeats = await page
-    .locator("div span.text-sm")
-    .nth(18)
+  const cardLocator = page.locator(".bg-white").nth(1);
+  const customerNameInViewDetails = await cardLocator
+    .locator(".text-sm")
+    .nth(1)
     .innerText();
+  await expect(customerNameInViewDetails === bookingName).toBeTruthy();
+
+  //Fetch and compare the customer email
+  const customerEmailViewDetails = await cardLocator
+    .locator(".text-sm")
+    .nth(3)
+    .innerText();
+  await expect(customerEmailViewDetails === bookingEmail).toBeTruthy();
+
+  //assert if only one seat is booked
+  const cardLocatorSeats = page.locator(".bg-white").nth(2);
+  const bookedSeats = await (cardLocatorSeats.locator(".text-sm").nth(1)).innerText();
 
 
   await expect(bookedSeats === "1").toBeTruthy();
