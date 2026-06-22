@@ -6,7 +6,7 @@ const email = "srinidhinidhi38@gmail.com";
 const password = "April@123";
 test("Should log in successfully", async ({ page }) => {
   const loginPage = new LoginPage(page);
-  loginPage.logIn(email, password);
+  await loginPage.logIn(email, password);
 
   //To verify if log out button is present
   const logOutButtonLocator = page.locator("#logout-btn");
